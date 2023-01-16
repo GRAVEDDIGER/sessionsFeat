@@ -122,3 +122,7 @@ align-self: flex-end;
     border: 2px solid #333;
 border-radius: 60%;
 }
+.loginStatus{
+ background-color: #f5f5ca;
+ box-shadow: 3px 3px 15px #f5f5cc;   
+}

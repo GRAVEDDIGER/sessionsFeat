@@ -1,4 +1,4 @@
-# **FAKER JS FEAT FOR CODER HOUSE**
+# **Sessions File Storage Feat**
 
 This backend contains two features, the first one is a fake products api with a static view builded through handlebars. And the other Feat is a socket io basic chat with persistance.
 When socket connects it retrives data from mongo atlas database and pushes it to the front in an array of objects that represents the menssage.

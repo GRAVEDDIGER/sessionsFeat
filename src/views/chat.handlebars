@@ -1,32 +1,17 @@
 <script src="/socket.io/socket.io.js"></script>
 
-<main>
-  <form id="userForm" action="#" class="userData">
-    <h2>Datos del usuario</h2>
-    <input type="text" name="id" id="id" placeholder="e-Mail" />
-    <input type="text" name="nombre" id="lastName" placeholder="Apellido" />
-    <input type="text" name="apellido" id="lastName" placeholder="Apellido" />
-    <input type="text" name="edad" id="age" placeholder="Edad" />
-    <input type="text" name="alias" id="nickName" placeholder="Alias" />
-    <input type="text" name="avatar" id="avatar" placeholder="Avatar URL" />
-    <button id="userSave" class="buttonSub">Guardar usuario</button>
-  </form>
-  <form id="messageForm" action="#" class="userData">
-    <h2>Chat</h2>
-    <section class="chatBox" id="chatBox">
+<div class="loginStatus">
+  <h2>Hola por favor haz login</h2>
+  <a href="/login">Login</a>
+</div>
+<form id="messageForm" action="#" class="userData">
+  <h2>Chat</h2>
+  <section class="chatBox" id="chatBox">
 
-    </section>
-    <div class="messageBoxCombo">
-      <input
-        type="text"
-        name="messageBox"
-        id="messageBox"
-        class="msgBoxClass"
-        placeholder="Write your message"
-      />
-      <button class="sendMessageButton">send</button>
-    </div>
-  </form>
-</main>
+  </section>
+  <div class="messageBoxCombo">
+    <input type="text" name="messageBox" id="messageBox" class="msgBoxClass" placeholder="Write your message" />
+    <button class="sendMessageButton">send</button>
+  </div>
+</form>
 <script src="chat.js"></script>
-
