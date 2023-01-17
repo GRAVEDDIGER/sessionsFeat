@@ -11,8 +11,8 @@ header{
     font-size: 3rem;
     font-weight: bold;
     font-family: sans-serif;
-    margin:2rem;
-    padding:2rem
+    margin:0.5rem 2rem;
+    padding:0.5rem 2rem
 }
 footer{
     display: flex;
@@ -57,6 +57,12 @@ align-self: flex-end;
     box-shadow: 3px 3px 15px #666;
     padding: 0.5rem;
     margin: 1rem;
+}
+.buttonSub:hover{
+    background-color:#f0ffdd;
+}
+.buttonSub:active{
+    box-shadow: 5px 5px 25px #666;
 }
 .userData{
     display: flex;
@@ -125,4 +131,25 @@ border-radius: 60%;
 .loginStatus{
  background-color: #f5f5ca;
  box-shadow: 3px 3px 15px #f5f5cc;   
+}
+.menuContainer{
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    padding:0  1rem;
+    margin: 0px 1rem;
+
+}
+.menuContainer >span{
+    display: flex;
+    justify-content: center;
+
+}
+.menuContainer >span >a{
+    text-decoration: none;
+    color:brown;
+    font-weight: bold;
+    margin: 0 1rem;
+    padding:1rem;
+    
 }

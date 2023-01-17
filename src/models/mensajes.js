@@ -14,17 +14,29 @@ dbConnect()
 const Schema =mongoose.Schema
 const messageSchema =new Schema({
     author:{
-        id:{type:"string",required:"true", unique:"true"} ,
-        nombre:{type:"string",required:"true"},
-        apellido:{type:"string",required:"true"},
-        edad:{type:'string',required:"true"},
-        alias:{type:"string",required:"true"},
-        avatar:{type:"string",required:"true"}
+        id:{type:String,required:true, unique:true} ,
+        nombre:{type:String,required:true},
+        apellido:{type:String,required:true},
+        edad:{type:String,required:true},
+        alias:{type:String,required:true},
+        avatar:{type:String,required:true}
+        
     },
     text:{
         type:"string"
     }},{timestamps:true}
 
 )
+const userSchema=new Schema({
+    user: {type:String,required:true,unique:true},
+    password:{type:String,required:true},
+    nombre:{type:String,required:true},
+        apellido:{type:String,required:true},
+        edad:{type:String,required:true},
+        alias:{type:String,required:true},
+        avatar:{type:String,required:true}
+
+})
+const userCollection=mongoose.model('userCollection',userSchema)
 const userModel=mongoose.model("messageCollection",messageSchema)
-module.exports=userModel
+module.exports={userModel,userCollection}
