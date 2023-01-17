@@ -19,12 +19,17 @@
     "faker": "5.5",
     "mongoose": "^6.8.3",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.20",
     "postcss": "^8.4.21",
+    "session-file-store": "^1.5.0",
     "socket.io": "^4.5.4"
   },
   "devDependencies": {
     "eslint": "^3.11.1",
     "standart": "^6.1.0",
     "vitest": "^0.27.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standart/eslintrc.json"
   }
 }

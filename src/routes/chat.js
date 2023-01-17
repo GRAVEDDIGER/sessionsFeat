@@ -1,5 +1,5 @@
-const router=require('express').Router()
-router.get('/',(req,res)=>{
+const router = require('express').Router()
+router.get('/', (req, res) => {
     res.render('chat')
 })
-module.exports=router
+module.exports = router
