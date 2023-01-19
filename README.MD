@@ -32,3 +32,5 @@ npm run test
 ### STATIC VIEW:
 
 ![Alt text](Faker%20JS_page-0001.jpg)
+
+![Alt text](ChatScreen.png)

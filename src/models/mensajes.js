@@ -14,7 +14,7 @@ dbConnect()
 const Schema = mongoose.Schema
 const messageSchema = new Schema({
     author:{
-        id:{type:String, required:true, unique:true},
+        id:{type:String, required:true},
         nombre:{type:String, required:true},
         apellido:{type:String, required:true},
         edad:{type:String, required:true},

@@ -150,3 +150,5 @@ img {
   margin: 0 1rem;
   padding: 1rem;
 }
+.logout{display: none;}
+.visible{display: flex !important;}
