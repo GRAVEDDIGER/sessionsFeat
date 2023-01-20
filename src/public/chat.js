@@ -1,28 +1,24 @@
 /* eslint-disable no-undef */
 const socket = io()
 const messageForm = document.getElementById('messageForm')
-// const buttonUser = document.getElementById('userSave')
 const chatBox = document.getElementById('chatBox')
 let currentUser
 socket.emit('userRequest')
 socket.once('userResponse', (data) => {
-currentUser = data
-main(JSON.parse(data))
+  currentUser = data
+getDataFromServer(JSON.parse(data))
 })
 
-function main(currentUser) {
+function getDataFromServer(currentUser) {
 socket.on('serverMessage', async  (messageFromServer) => {
   let parsedMessage = []
-    console.log('adadad')
     if (Array.isArray(JSON.parse(messageFromServer)))      {
 parsedMessage = JSON.parse(messageFromServer)
 }    else {
-      console.log('single message')
       parsedMessage.push(JSON.parse(messageFromServer))
     }
 
     parsedMessage.forEach(async (innerMessage) => {
-      console.log(innerMessage, currentUser, '****************')
       const { author, text } = innerMessage
 
       chatBox.innerHTML += `<div class="msgContainer ${

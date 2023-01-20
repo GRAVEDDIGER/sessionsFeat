@@ -12,6 +12,7 @@ const products = require('./routes/product.js')
 const chat = require('./routes/chat')
 const login = require('./routes/login')
 const logout = require('./routes/logout')
+const objectTranspiler = require('./helper/objectTranspiler')
 const register = require('./routes/register')
 const session = require('express-session')
 const FileStorage = require('session-file-store')
@@ -42,12 +43,6 @@ app.engine('handlebars', handlebars.engine())
 app.set('view engine', 'handlebars')
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-// app.get('/getCurrentUser', (req, res) => {
-//   console.log(req.session)
-//   // const responseObj = {author:{...req.session.user, password:undefined, id:req.session.user.user, user:undefined}}
-//   // console.log(responseObj)
-//   res.status(200).send(JSON.stringify(responseObj))
-// })
 app.use('/logout', logout)
 app.use('/products', products)
 app.use('/chat', chat)
@@ -55,13 +50,12 @@ app.use('/login', login)
 app.use('/logout', login)
 app.use('/register', register)
 app.use(morgan('tiny'))
-
-  app.use((req, res) => { // ruta default desvia a login
+app.use((req, res) => { // ruta default desvia a login
   res.status(300).redirect('/login')
 })
 
 // /////////////////////
-// Sockets           //
+// Sockets            //
 // /////////////////////
 
 /* Middleware para Socket IO que recupera session dentro del objeto request del socket */
@@ -72,14 +66,8 @@ socketSrv.use(wrap(sesssionMiddleware))
 socketSrv.on('connection', async (socket) => {
   console.log(colors.bgCyan.white.bold('WebSockets Connected'))
   socket.on('userRequest', () => {
-       socket.emit('userResponse', JSON.stringify({
-    author: {
-      ...socket.request.session.user,
-      id:socket.request.session.user.user,
-      user:undefined,
-      password:undefined
-    }}))
-  })
+       socket.emit('userResponse', JSON.stringify(objectTranspiler(socket.request.session.user, false)))
+      })
   const data = await messagePersistance.find()
 // envia al front la informacion obtenida de la base de datos en la colleccion de mensajes
   socket.emit('serverMessage', JSON.stringify(data))
@@ -88,16 +76,8 @@ socketSrv.on('connection', async (socket) => {
     let messageParsed
     const msgObj = JSON.parse(message)
     console.log(colors.bgGreen.bold(msgObj))
-
-    messageParsed = JSON.stringify({
-      text:msgObj.text,
-      author:{
-      ...socket.request.session.user,
-      id:socket.request.session.user.user,
-      user:undefined,
-      password:undefined
-    }
-    })
+// la funcion object transpiler genera el objeto a ser luego persistido
+    messageParsed = JSON.stringify(objectTranspiler(socket.request.session.user, msgObj))
     messagePersistance.create(JSON.parse(messageParsed))
 // envia la informacion al front para que se pinte en el dom
     socketSrv.emit('serverMessage', messageParsed)
