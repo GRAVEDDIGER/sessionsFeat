@@ -63,14 +63,16 @@ app.use(morgan('tiny'))
 // /////////////////////
 // Sockets           //
 // /////////////////////
+
+/* Middleware para Socket IO que recupera session dentro del objeto request del socket */
 const wrap = middleware => (socket, next) => middleware(socket.request, {}, next)
 const socketSrv = socket(server)
 socketSrv.use(wrap(sesssionMiddleware))
+
 socketSrv.on('connection', async (socket) => {
   console.log(colors.bgCyan.white.bold('WebSockets Connected'))
   socket.on('userRequest', () => {
-    console.log('cosa')
-   socket.emit('userResponse', JSON.stringify({
+       socket.emit('userResponse', JSON.stringify({
     author: {
       ...socket.request.session.user,
       id:socket.request.session.user.user,
@@ -79,7 +81,9 @@ socketSrv.on('connection', async (socket) => {
     }}))
   })
   const data = await messagePersistance.find()
+// envia al front la informacion obtenida de la base de datos en la colleccion de mensajes
   socket.emit('serverMessage', JSON.stringify(data))
+// escucha cuando el front envia un nuevo mensaje y compone el objeto para generar la persistencia en la base de datos
   socket.on('clientMessage', (message) => {
     let messageParsed
     const msgObj = JSON.parse(message)
@@ -95,6 +99,7 @@ socketSrv.on('connection', async (socket) => {
     }
     })
     messagePersistance.create(JSON.parse(messageParsed))
+// envia la informacion al front para que se pinte en el dom
     socketSrv.emit('serverMessage', messageParsed)
   })
 })
