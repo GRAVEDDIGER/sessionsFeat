@@ -11,6 +11,7 @@ const colors = require('colors')
 const products = require('./routes/product.js')
 const chat = require('./routes/chat')
 const login = require('./routes/login')
+const logout = require('./routes/logout')
 const register = require('./routes/register')
 const session = require('express-session')
 const FileStorage = require('session-file-store')
@@ -21,9 +22,9 @@ const app = express()
 const sesssionMiddleware = session({
   store: new Store({
     path: './sessions',
-    ttl: 3600
+    ttl: 9000
   }),
-  secret: 'Lorem Ipsum',
+    secret: 'Lorem Ipsum',
   resave: false,
   saveUninitialized: false
 })
@@ -41,13 +42,21 @@ app.engine('handlebars', handlebars.engine())
 app.set('view engine', 'handlebars')
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+// app.get('/getCurrentUser', (req, res) => {
+//   console.log(req.session)
+//   // const responseObj = {author:{...req.session.user, password:undefined, id:req.session.user.user, user:undefined}}
+//   // console.log(responseObj)
+//   res.status(200).send(JSON.stringify(responseObj))
+// })
+app.use('/logout', logout)
 app.use('/products', products)
 app.use('/chat', chat)
 app.use('/login', login)
 app.use('/logout', login)
 app.use('/register', register)
 app.use(morgan('tiny'))
-app.use((req, res) => { // ruta default desvia a login
+
+  app.use((req, res) => { // ruta default desvia a login
   res.status(300).redirect('/login')
 })
 

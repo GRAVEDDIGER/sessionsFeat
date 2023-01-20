@@ -4,28 +4,24 @@ const messageForm = document.getElementById('messageForm')
 // const buttonUser = document.getElementById('userSave')
 const chatBox = document.getElementById('chatBox')
 let currentUser
-// socket.emit('userRequest')
-// console.log('user> ', currentUser)
-socket.on('userResponse', async (userFromSession) => {
-  currentUser = JSON.parse(userFromSession)
-  if (!currentUser) await fetch('/login')
+socket.emit('userRequest')
+socket.once('userResponse', (data) => {
+currentUser = data
+main(JSON.parse(data))
 })
-socket.on('serverMessage', (messageFromServer) => {
-  if (currentUser === undefined) {
-    socket.emit('userRequest')
-}
 
-    let parsedMessage = []
+function main(currentUser) {
+socket.on('serverMessage', async  (messageFromServer) => {
+  let parsedMessage = []
     console.log('adadad')
     if (Array.isArray(JSON.parse(messageFromServer)))      {
- parsedMessage = JSON.parse(messageFromServer)
+parsedMessage = JSON.parse(messageFromServer)
 }    else {
       console.log('single message')
       parsedMessage.push(JSON.parse(messageFromServer))
     }
 
-    parsedMessage.forEach((innerMessage) => {
-      currentUser = currentUser || innerMessage
+    parsedMessage.forEach(async (innerMessage) => {
       console.log(innerMessage, currentUser, '****************')
       const { author, text } = innerMessage
 
@@ -42,7 +38,7 @@ socket.on('serverMessage', (messageFromServer) => {
          </div>`
     })
 })
-
+}
 let currentMessage
 
 messageForm.addEventListener('submit', (e) => {
